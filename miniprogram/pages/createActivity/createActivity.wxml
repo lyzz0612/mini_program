@@ -1,0 +1,52 @@
+<!-- createActivity.wxml -->
+<view class="container">
+  <view class="input-section">
+    <text class="label">活动名称</text>
+    <input class="input-text" value="{{activityName}}" bindinput="bindInputActivityName" />
+  </view>
+
+  <view class="input-section">
+    <text class="label">活动人数上限</text>
+    <input class="max-part-input" type="number" value="{{maxParticipants}}" bindinput="bindMaxParticipantsInput" />
+  </view>
+
+  <view class="prize-section">
+    <view class="table-header">
+      <text class="prize-type">次第</text>
+      <text class="prize-name">奖品名称</text>
+      <text class="prize-num">数量</text>
+      <text class="prize-op">操作</text>
+    </view>
+
+    <block wx:for="{{prizes}}" wx:key="index">
+      <view class="table-row">
+        <text class="prize-type">{{item.type}}</text>
+        <text class="prize-name">{{item.name}}</text>
+        <text class="prize-num">{{item.quantity}}</text>
+        <view class="prize-op">
+          <button type="warn" size="mini" class="remove-button" bindtap="removePrize" data-index="{{index}}">删除</button>
+        </view>
+      </view>
+    </block>
+
+    <view class="input-section">
+      <view class="prize-type">        
+        <picker mode="selector" range="{{prizeTypes}}" bindchange="onPickerChange">
+          <view class="picker">
+            {{prizeType}}
+          </view>
+        </picker>
+      </view>
+      <input class="prize-input prize-name" placeholder="奖品名称" value="{{prizeName}}" bindinput="bindPrizeNameInput" />
+      <input class="prize-input prize-num" type="number" placeholder="数量" value="{{prizeQuantity}}" bindinput="bindPrizeQuantityInput" />
+      
+      <view class="prize-op">
+        <button type="primary" size="mini" bindtap="addPrize">添加奖品</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="input-section">
+    <button bindtap="saveActivityDetail" class="save-button">保存活动</button>
+  </view>
+</view>

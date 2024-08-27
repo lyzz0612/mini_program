@@ -1,0 +1,6 @@
+<!-- index.wxml -->
+<view class="container">
+
+  <button bindtap="createActivity">创建博饼活动</button>
+  <button bindtap="activityList">查看活动</button>
+</view>
