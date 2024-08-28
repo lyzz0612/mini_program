@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/createActivity/createActivity",
+    "pages/activityDetail/activityDetail",
+    "pages/activityLogic/activityLogic",
+    "pages/activityList/activityList",
+    "pages/activityResult/activityResult"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "permission": {},
+  "plugins": {},
+  "usingComponents": {}
+}

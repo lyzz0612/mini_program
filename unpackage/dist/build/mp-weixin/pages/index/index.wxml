@@ -1,0 +1,1 @@
+<view class="container"><button bindtap="{{a}}">创建博饼活动</button><button bindtap="{{b}}">查看活动</button></view>

@@ -1,5 +1,5 @@
 {
-    "name" : "miniprogram-ts-less-quickstart",
+    "name" : "博饼小助手",
     "appid" : "__UNI__9DC05B5",
     "description" : "",
     "versionName" : "1.0.0",
@@ -28,7 +28,8 @@
     "mp-weixin" : {
         "appid" : "wxbdf69dee6e2f9589",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "minified" : true
         },
         "usingComponents" : true,
         "permission" : {},
@@ -46,5 +47,5 @@
     "uniStatistics" : {
         "enable" : false
     },
-    "vueVersion" : "2"
+    "vueVersion" : "3"
 }

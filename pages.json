@@ -2,23 +2,40 @@
 	"pages": [
 		{
 			"path": "pages/index/index",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "博饼助手"
+			}
 		},
 		{
 			"path": "pages/createActivity/createActivity",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "创建活动"
+			}
 		},
 		{
 			"path": "pages/activityDetail/activityDetail",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "活动详情"
+			}
 		},
 		{
 			"path": "pages/activityLogic/activityLogic",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "博饼"
+			}
 		},
 		{
 			"path": "pages/activityList/activityList",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "活动列表"
+			}
+		},
+		{
+			"path" : "pages/activityResult/activityResult",
+			"style" : 
+			{
+				"navigationBarTitleText" : "博饼结果"
+			}
 		}
 	],
 	"style": "v2",

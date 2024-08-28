@@ -28,3 +28,27 @@ button {
     margin-bottom: 10px;
 }
 </style>
+
+<script>
+	export default {
+		data() {
+			return {
+			}
+		},
+		onLoad() {
+			// 页面启动的生命周期，这里编写页面加载时的逻辑
+		},
+		methods: {
+			createActivity: function () {
+				uni.navigateTo({
+					url: "/pages/createActivity/createActivity"
+				})
+			},
+			activityList: function () {
+				uni.navigateTo({
+					url: "/pages/activityList/activityList"
+				})
+			},
+		}
+	}
+</script>
