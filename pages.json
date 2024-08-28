@@ -1,0 +1,33 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {}
+		},
+		{
+			"path": "pages/createActivity/createActivity",
+			"style": {}
+		},
+		{
+			"path": "pages/activityDetail/activityDetail",
+			"style": {}
+		},
+		{
+			"path": "pages/activityLogic/activityLogic",
+			"style": {}
+		},
+		{
+			"path": "pages/activityList/activityList",
+			"style": {}
+		}
+	],
+	"style": "v2",
+	"componentFramework": "glass-easel",
+	"lazyCodeLoading": "requiredComponents",
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "Weixin",
+		"navigationBarBackgroundColor": "#ffffff"
+	},
+	"subPackages": []
+}
