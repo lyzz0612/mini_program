@@ -37,14 +37,14 @@
 			<view class="table-row" v-for="(item, index) in participants" :key="index">
 				<text class="table-cell">{{ item }}</text>
 
-				<button type="warn" size="mini" class="table-cell" :data-index="index"
+				<button type="warn" size="mini" class="remove-button" :data-index="index"
 					@tap="removeParticipant">移除</button>
 			</view>
 
 			<!-- 参与者表格输入 -->
 			<view v-if="participants.length < maxParticipants" class="table-row">
 				<input class="input-text participant-name" placeholder="请输入参与者名称" v-model="newParticipantName" />
-				<button size="mini" type="primary" @tap="addParticipant">添加参与者</button>
+				<button size="mini" type="primary" class="add-button" @tap="addParticipant">添加</button>
 			</view>
 		</view>
 
@@ -60,7 +60,7 @@
 	.container {
 		padding: 10px;
 	}
-
+	
 	.input-section {
 		display: flex;
 		justify-content: space-between;
@@ -130,10 +130,10 @@
 	.remove-button {
 		/* 修改删除按钮的样式 */
 		margin-left: 10px;
-		padding: 5px 10px;
-		border: none;
-		border-radius: 4px;
-		font-size: 16px;
+	}
+	.add-button {
+		/* 修改删除按钮的样式 */
+		margin-left: 10px;
 	}
 
 	.picker {
@@ -210,7 +210,7 @@
 				uni.showToast({
 					title: "参数错误"
 				})
-				uni.redirectTo({
+				uni.reLaunch({
 					url: "/pages/index/index"
 				})
 				return
@@ -226,7 +226,7 @@
 					uni.showToast({
 						title: "找不到该活动"
 					})
-					uni.redirectTo({
+					uni.reLaunch({
 						url: "/pages/index/index"
 					})
 					return
@@ -270,7 +270,7 @@
 				let activityDetail = uni.getStorageSync(id);
 				activityDetail.participants = this.participants;
 				uni.setStorageSync(id, activityDetail);
-
+				this.$Utils.saveToDB("activitys", activityDetail)
 				uni.redirectTo({
 					url: `/pages/activityLogic/activityLogic?id=${id}`,
 				});
@@ -281,6 +281,14 @@
 				let activityDetail = uni.getStorageSync(id);
 				activityDetail.participants = this.participants;
 				uni.setStorageSync(id, activityDetail);
+				
+				this.$Utils.saveToDB("activitys", activityDetail).then(() => {
+					uni.showToast({
+						title: '保存成功',
+						icon: 'none'
+					});
+					
+				})
 			}
 		}
 	}

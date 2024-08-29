@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="input-section">
-			<text class="label">{{activityName}}</text>
+			<text class="result-label">{{activityName}}</text>
 		</view>
 
 		<!-- 日志列表 -->
@@ -10,10 +10,32 @@
 				第{{item.round}}轮{{ item.person }}掷出{{ item.prizeType }}，获得{{ item.prize }}
 			</view>
 		</scroll-view>
-		<button class="btn-back" @tap="backToMain">返回主页面</button>
+		<button class="btn-back" type="primary" @tap="backToMain">返回主页面</button>
 	</view>
 </template>
 
+<style>
+	.container {
+		padding: 10px;
+	}
+
+	.result-label {
+		text-align: left;
+		font-size: 26px;
+	}
+
+	.input-section {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+		padding: 5px 0;
+	}
+
+	.btn-back {
+		margin: 20rpx;
+	}
+</style>
 <script>
 	export default {
 		data() {
@@ -27,7 +49,7 @@
 				uni.showToast({
 					title: "参数错误"
 				})
-				uni.redirectTo({
+				uni.reLaunch({
 					url: "/pages/index/index"
 				})
 				return
@@ -45,7 +67,7 @@
 					uni.showToast({
 						title: "找不到该活动"
 					})
-					uni.redirectTo({
+					uni.reLaunch({
 						url: "/pages/index/index"
 					})
 					return
@@ -61,20 +83,16 @@
 				if (index < 0) return
 				activitys.splice(index, 1)
 				uni.setStorageSync('activitys', activitys);
-				uni.setClipboardData({
-					data: JSON.stringify(this.records)
-				})
+				let finishedActivitys = uni.getStorageSync('finishedActivitys') || [];
+				finishedActivitys.push(id)
+				uni.setStorageSync('finishedActivitys', finishedActivitys);
 			},
-			backToMain()
-			{
-				uni.redirectTo({
-					url: "/pages/index/index"
+			backToMain() {
+				uni.reLaunch({
+					url: "/pages/index/index",
+
 				})
 			}
 		}
 	}
 </script>
-
-<style>
-
-</style>

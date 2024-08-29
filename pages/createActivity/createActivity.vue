@@ -50,6 +50,7 @@
 
 		<view class="input-section">
 			<button @tap="createActivity" class="save-button">创建活动</button>
+			<button @tap="cloneActivity" class="clone-button">扫码复制</button>
 		</view>
 	</view>
 </template>
@@ -132,13 +133,20 @@
 		font-size: 16px;
 	}
 
-	.remove-button {
-		/* 修改删除按钮的样式 */
+	.clone-button {
 		margin-left: 10px;
 		padding: 5px 10px;
+		width: 100px;
+		background-color: indianred;
+		color: #fff;
 		border: none;
 		border-radius: 4px;
 		font-size: 16px;
+	}
+
+	.remove-button {
+		/* 修改删除按钮的样式 */
+		margin-left: 10px;
 	}
 
 	.picker {
@@ -240,22 +248,52 @@
 					maxParticipants: this.maxParticipants,
 					participants: [],
 					prizes: this.prizes,
+					openid: this.$globals.openid || "anonymous",
+					finished: false,
 					records: []
 				};
+				this.$Utils.insertToDB("activitys", newActivity).then((result) => {
+					newActivity["_id"] = result["_id"] 
+					uni.setStorageSync(newActivity.id, newActivity);
+					let activitys = uni.getStorageSync('activitys') || [];
+					activitys.push({
+						_id: newActivity["_id"],
+						id: newActivity.id,
+						activityName: newActivity.activityName,
+						prizesNum: newActivity.prizes.length,
+					})				
+					uni.setStorageSync('activitys', activitys);
+					uni.showToast({
+						title: '活动保存成功',
+						icon: 'success'
+					});
+					
+					uni.redirectTo({
+						url: `/pages/activityDetail/activityDetail?id=${newActivity.id}`
+					});
+				})
 
-				let activitys = uni.getStorageSync('activitys') || [];
-				activitys.push(newActivity.id)				
-				uni.setStorageSync('activitys', activitys);				
-				uni.setStorageSync(newActivity.id, newActivity);
-
-				uni.showToast({
-					title: '活动保存成功',
-					icon: 'success'
-				});
 				
-				uni.redirectTo({
-					url: `/pages/activityDetail/activityDetail?id=${newActivity.id}`
-				});
+			},
+			cloneActivity() {
+				uni.scanCode({
+					success: (res) => {
+						let result = JSON.parse(res.result)
+						uni.setClipboardData({
+							data: res.result
+						})
+						this.activityName = result.activityName
+						this.maxParticipants = result.maxParticipants
+						this.$Utils.getFromDB("activitys", {id: result.id}).then((result_info) => {
+							if(result_info) {
+								this.prizes.length = 0
+								for(let prize of result_info.prizes) {
+									this.prizes.push(prize)
+								}
+							}
+						})
+					}
+				})
 			}
 		},
 	}

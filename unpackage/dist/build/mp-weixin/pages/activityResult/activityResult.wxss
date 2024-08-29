@@ -1,0 +1,1 @@
+.container{padding:10px}.result-label{text-align:left;font-size:26px}.input-section{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:5px 0}.btn-back{margin:20rpx}

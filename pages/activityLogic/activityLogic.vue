@@ -125,7 +125,7 @@
 				uni.showToast({
 					title: "参数错误"
 				})
-				uni.redirectTo({
+				uni.reLaunch({
 					url: "/pages/index/index"
 				})
 				return
@@ -151,7 +151,7 @@
 					uni.showToast({
 						title: "找不到该活动"
 					})
-					uni.redirectTo({
+					uni.reLaunch({
 						url: "/pages/index/index"
 					})
 					return
@@ -192,9 +192,13 @@
 							
 							let activityDetail = uni.getStorageSync(this.activityId);
 							activityDetail.records = this.records
+							activityDetail.finished = true
 							uni.setStorageSync(this.activityId, activityDetail)
-							uni.redirectTo({
-								url: `/pages/activityResult/activityResult?id=${this.activityId}`
+							
+							this.$Utils.saveToDB("activitys", activityDetail).then(() => {
+								uni.redirectTo({
+									url: `/pages/activityResult/activityResult?id=${this.activityId}`
+								})
 							})
 						}
 					})

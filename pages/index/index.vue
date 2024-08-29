@@ -3,6 +3,7 @@
     <view class="container">
         <button @tap="createActivity">创建博饼活动</button>
         <button @tap="activityList">查看活动</button>
+        <button @tap="finishedActivityList">查看已结束活动</button>
     </view>
 </template>
 
@@ -36,7 +37,36 @@ button {
 			}
 		},
 		onLoad() {
-			// 页面启动的生命周期，这里编写页面加载时的逻辑
+			uni.showLoading({
+				title: "登录中"
+			})
+			this.$Utils.login().then((result) => {
+				console.log("login result", result)
+				uni.hideLoading()
+				this.$globals.openid = result.openid || "anonymous"
+				this.$Utils.getFromDB("activitys", {openid: this.$globals.openid}).then((results) => {
+					let activitys = []
+					let finishedActivitys = []
+					for(let activity of results) {
+						uni.setStorageSync(activity.id, activity)
+						if(activity.finished) {
+							finishedActivitys.push({													_id: activity._id,
+								id: activity.id,
+								activityName: activity.activityName,
+								prizesNum: activity.prizes.length,
+							})
+						} else {
+							activitys.push({															_id: activity._id,
+								id: activity.id,
+								activityName: activity.activityName,
+								prizesNum: activity.prizes.length,
+							})
+						}
+					}
+					uni.setStorageSync("activitys", activitys)
+					uni.setStorageSync("finishedActivitys", finishedActivitys)
+				})
+			})
 		},
 		methods: {
 			createActivity: function () {
@@ -46,7 +76,12 @@ button {
 			},
 			activityList: function () {
 				uni.navigateTo({
-					url: "/pages/activityList/activityList"
+					url: "/pages/activityList/activityList?key=activitys"
+				})
+			},
+			finishedActivityList: function () {
+				uni.navigateTo({
+					url: "/pages/activityList/activityList?key=finishedActivitys"
 				})
 			},
 		}
